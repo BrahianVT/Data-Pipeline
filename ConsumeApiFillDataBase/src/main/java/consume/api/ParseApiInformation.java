@@ -55,7 +55,7 @@ public class ParseApiInformation {
             BigDecimal latitude = new BigDecimal(positionLatitude);
             String alcaldia = consumeAPIGetCounty(longitude, latitude);
             metrobus = new Metrobus(recordId, vehicleId, dateUpdated, longitude, latitude, alcaldia);
-            conn.insertBusInfo2(metrobus);
+            conn.insertBusInfo(metrobus);
 
         }
 

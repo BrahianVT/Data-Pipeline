@@ -60,29 +60,7 @@ public class SqlConnection {
     }
 
 
-    public void insertBusInfo2(Metrobus bus){
-        String queryInsert = "INSERT INTO metrobus_info(id_record, id_vehicle, date_updated, longitude , latitude" +
-                ", county) VALUES (";
-        queryInsert+= "'" + bus.getRecordId() + "', " + "'"+bus.getVehicleId()+"', " + "'" + bus.getDateUpdated() + "', "
-                + bus.getLongitude() + ", " + bus.getLatitude()+",'" +bus.getAlcaldia() +"')";
-        System.out.println(queryInsert);
-        try {
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(queryInsert);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void insertBusInfo(){
-        Metrobus bus = new Metrobus();
-        bus.setAlcaldia("Coyoacán");
-        bus.setDateUpdated("2020-05-21 20:00:03");
-        bus.setLatitude(new BigDecimal("19.292600631713867"));
-        bus.setLongitude(new BigDecimal("-99.17749786376953"));
-        bus.setVehicleId("177");
-        bus.setRecordId("0c94473d65d2185d7efc65b89d57413eda8ebfcc");
-
+    public void insertBusInfo(Metrobus bus){
         String queryInsert = "INSERT INTO metrobus_info(id_record, id_vehicle, date_updated, longitude , latitude" +
                 ", county) VALUES (";
         queryInsert+= "'" + bus.getRecordId() + "', " + "'"+bus.getVehicleId()+"', " + "'" + bus.getDateUpdated() + "', "
