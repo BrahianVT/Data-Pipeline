@@ -2,6 +2,7 @@ package consume.api;
 
 
 import consume.api.entity.Metrobus;
+import consume.api.sqlConn.SqlConnection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,13 +23,14 @@ public class ConsumeApiFillDataBase {
 
     ParseApiInformation parse = new ParseApiInformation();
     ConnectConsumeApi consumeApi = new ConnectConsumeApi();
-
+    SqlConnection sqlConn = new SqlConnection();
     public void consumeApi() throws IOException {
             while(true) {
                 String url = URL_BASE_API +"&rows="+ROWS+"&start="+startIndex;
                 BufferedReader br = consumeApi.getBufferedReader(url);
                 String outputApi = br.readLine();
                 startIndex += ROWS;
+
                 if(!outputApi.contains("datasetid")) break;
                 Metrobus metrobusElement = parse.parseDataApi(outputApi);
             }

@@ -5,8 +5,8 @@ CREATE TABLE metrobus_info(
 	id_record varchar(40) NOT NULL,
 	id_vehicle varchar(4) NOT NULL,
 	date_updated datetime,
-	longitude decimal(15,3),
-	latitude decimal(15,3),
+	longitude decimal(16,14),
+	latitude decimal(16,14),
 	county varchar(30),
 	PRIMARY KEY(id_record)
 );

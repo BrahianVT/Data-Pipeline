@@ -21,14 +21,29 @@ public class ParseApiInformation {
     Pattern patternPositionLongitude = Pattern.compile("(?<=position_longitude\": ).*?(?=,)");
     Pattern patternPositionLatitude = Pattern.compile("(?<=position_latitude\": ).*?(?=,)");
     Pattern patternCounty = Pattern.compile("(?<=county\":\").*?(?=\")");
+    Pattern patternStart = Pattern.compile("(?<=start\": ).*?(?=,)");
 
 
-    Matcher matcherRecordId, matcherVehicleId , matcherCounty;
+    Matcher matcherRecordId, matcherVehicleId , matcherCounty, matcherStart;
     Matcher matcherDateUpdated, matcherPositionLongitude, matcherPositionLatitude;
 
     ConnectConsumeApi consumeApiCounty = new ConnectConsumeApi();
-
+    Metrobus metrobus;
     public Metrobus parseDataApi(String result) throws IOException{
+        matcherStart = patternStart.matcher(result);
+        if(matcherStart.find()){
+            if(matcherStart.group(0).equals("0")){
+
+               // String firstRecordId = result.substring(203, 240);
+                //String startIndex = result.substring(110, 111);
+                //System.out.println(firstRecordId + ":" + startIndex);
+            }
+        }
+        String firstRecordId = result.substring(203, 240);
+        String startIndex = result.substring(110, 111);
+        System.out.println(firstRecordId + ":" + startIndex);
+
+
         matcherRecordId = patternRecordId.matcher(result);
         matcherVehicleId = patternVehicleId.matcher(result);
         matcherDateUpdated = patternDateUpdated.matcher(result);
@@ -48,18 +63,27 @@ public class ParseApiInformation {
             BigDecimal longitude = new BigDecimal(positionLongitude);
             BigDecimal latitude = new BigDecimal(positionLatitude);
             String alcaldia = consumeAPIGetCounty(longitude, latitude);
-            Metrobus metrobus = new Metrobus(recordId, vehicleId, dateUpdated, longitude, latitude, alcaldia);
-            return metrobus;
+            System.out.println(alcaldia);
+            metrobus = new Metrobus(recordId, vehicleId, dateUpdated, longitude, latitude, alcaldia);
+
 
         }
-        return null;
+        return metrobus;
     }
 
     public String parseCounty(String county){
         matcherCounty = patternCounty.matcher(county);
-        if(matcherCounty.find())
+        if(matcherCounty.find()){
             return matcherCounty.group(0);
-        else
+        }
+        else{
+            String[] alcaldias = { "Gustavo A. Madero","Álvaro Obregón","Tláhuac","Xochimilco","Tlalpan",
+                    "La Magdalena Contreras","Venustiano Carranza","Cuauhtémoc","Benito Juárez",
+                    "Iztapalapa","Coyoacán","Miguel Hidalgo","Azcapotzalco","Milpa Alta","Iztacalco" };
+            for (String alcaldia: alcaldias){
+                if(county.contains(alcaldia)) return alcaldia;
+            }
+        }
             return null;
     }
 
