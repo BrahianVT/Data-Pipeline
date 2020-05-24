@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.Properties;
 
 /**
- *
+ * @author BrahianVT
  * */
 public class SqlConnection {
     Properties config;
@@ -42,20 +42,38 @@ public class SqlConnection {
         }
     }
 
-    public void checkRecordId(String recordId){
+    public boolean checkRecordId(String recordId){
         try{
             Statement statement = conn.createStatement();
             String query = "select id_record from metrobus_info where id_record ='"+recordId+"'";
+            System.out.println(query);
             ResultSet resultSet = statement.executeQuery(query);
-            if(resultSet.next())
+            if(resultSet.next()) {
                 System.out.println("Already stored in the database so skip this dataset");
-
+                return true;
+            }
             System.out.println("Storing  in database ...");
-
+            return false;
         }catch(SQLException ex){
-            ex.printStackTrace();
+            ex.printStackTrace(); return  false;
         }
     }
+
+
+    public void insertBusInfo2(Metrobus bus){
+        String queryInsert = "INSERT INTO metrobus_info(id_record, id_vehicle, date_updated, longitude , latitude" +
+                ", county) VALUES (";
+        queryInsert+= "'" + bus.getRecordId() + "', " + "'"+bus.getVehicleId()+"', " + "'" + bus.getDateUpdated() + "', "
+                + bus.getLongitude() + ", " + bus.getLatitude()+",'" +bus.getAlcaldia() +"')";
+        System.out.println(queryInsert);
+        try {
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(queryInsert);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public void insertBusInfo(){
         Metrobus bus = new Metrobus();
         bus.setAlcaldia("Coyoacán");
@@ -63,7 +81,7 @@ public class SqlConnection {
         bus.setLatitude(new BigDecimal("19.292600631713867"));
         bus.setLongitude(new BigDecimal("-99.17749786376953"));
         bus.setVehicleId("177");
-        bus.setRecordId("0c94473d65d2185d7efc65b89d57413eda8ebfca");
+        bus.setRecordId("0c94473d65d2185d7efc65b89d57413eda8ebfcc");
 
         String queryInsert = "INSERT INTO metrobus_info(id_record, id_vehicle, date_updated, longitude , latitude" +
                 ", county) VALUES (";
@@ -86,8 +104,8 @@ public class SqlConnection {
         // Sql conn
         SqlConnection test = new SqlConnection();
         test.openConnection();
-        test.checkRecordId("0c94473d65d2185d7efc65b89d57413eda8ebfca");
-       // test.insertBusInfo();
+        test.checkRecordId("0c94473d65d2185d7efc65b89d57413eda8ebfcc");
+        //test.insertBusInfo();
 
         test.disconnect();
     }

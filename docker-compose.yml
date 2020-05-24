@@ -7,7 +7,8 @@ services:
       - "3306:3306"
     volumes:
     - './Volumes-Docker/sql/init.sql:/sql/init.sql'
-    command: --init-file /sql/init.sql
+    command: ['--init-file=/sql/init.sql','--character-set-server=utf8mb4','--collation-server=utf8mb4_unicode_ci']
     environment:
       MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: metrobus  
+      MYSQL_DATABASE: metrobus
+      Lang: en_us.utf-8  

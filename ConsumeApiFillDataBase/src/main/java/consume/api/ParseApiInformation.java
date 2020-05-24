@@ -1,13 +1,11 @@
 package consume.api;
 
 import consume.api.entity.Metrobus;
+import consume.api.sqlConn.SqlConnection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,28 +19,21 @@ public class ParseApiInformation {
     Pattern patternPositionLongitude = Pattern.compile("(?<=position_longitude\": ).*?(?=,)");
     Pattern patternPositionLatitude = Pattern.compile("(?<=position_latitude\": ).*?(?=,)");
     Pattern patternCounty = Pattern.compile("(?<=county\":\").*?(?=\")");
-    Pattern patternStart = Pattern.compile("(?<=start\": ).*?(?=,)");
 
 
-    Matcher matcherRecordId, matcherVehicleId , matcherCounty, matcherStart;
+
+    Matcher matcherRecordId, matcherVehicleId , matcherCounty;
     Matcher matcherDateUpdated, matcherPositionLongitude, matcherPositionLatitude;
 
     ConnectConsumeApi consumeApiCounty = new ConnectConsumeApi();
     Metrobus metrobus;
-    public Metrobus parseDataApi(String result) throws IOException{
-        matcherStart = patternStart.matcher(result);
-        if(matcherStart.find()){
-            if(matcherStart.group(0).equals("0")){
+    SqlConnection conn = new SqlConnection();
 
-               // String firstRecordId = result.substring(203, 240);
-                //String startIndex = result.substring(110, 111);
-                //System.out.println(firstRecordId + ":" + startIndex);
-            }
-        }
-        String firstRecordId = result.substring(203, 240);
-        String startIndex = result.substring(110, 111);
-        System.out.println(firstRecordId + ":" + startIndex);
-
+    public boolean  parseDataApi(String result , int startIndex) throws IOException{
+        String auxStartIndex = result.substring(110, 111);
+        conn.openConnection();
+        if(startIndex == 0 && auxStartIndex.equals(""+startIndex))
+            if(validateDataSet(result.substring(200, 240))) {  conn.disconnect(); return false; }
 
         matcherRecordId = patternRecordId.matcher(result);
         matcherVehicleId = patternVehicleId.matcher(result);
@@ -63,12 +54,13 @@ public class ParseApiInformation {
             BigDecimal longitude = new BigDecimal(positionLongitude);
             BigDecimal latitude = new BigDecimal(positionLatitude);
             String alcaldia = consumeAPIGetCounty(longitude, latitude);
-            System.out.println(alcaldia);
             metrobus = new Metrobus(recordId, vehicleId, dateUpdated, longitude, latitude, alcaldia);
-
+            conn.insertBusInfo2(metrobus);
 
         }
-        return metrobus;
+
+        conn.disconnect();
+        return true;
     }
 
     public String parseCounty(String county){
@@ -95,9 +87,13 @@ public class ParseApiInformation {
         String result = br.readLine();
 
         // Esperar un segundo obligatorio para usar el api
-        try{ Thread.sleep(1000); }  catch (InterruptedException ex){ ex.printStackTrace(); }
+    //    try{ Thread.sleep(1000); }  catch (InterruptedException ex){ ex.printStackTrace(); }
 
         return parseCounty(result);
+    }
+
+    public boolean validateDataSet(String record){
+        return conn.checkRecordId(record);
     }
 
 }

@@ -29,12 +29,12 @@ public class ConsumeApiFillDataBase {
                 String url = URL_BASE_API +"&rows="+ROWS+"&start="+startIndex;
                 BufferedReader br = consumeApi.getBufferedReader(url);
                 String outputApi = br.readLine();
+                if(!outputApi.contains("datasetid") || !parse.parseDataApi(outputApi, startIndex)) break;
                 startIndex += ROWS;
 
-                if(!outputApi.contains("datasetid")) break;
-                Metrobus metrobusElement = parse.parseDataApi(outputApi);
             }
     }
+
 
     public static void main(String[] args) throws IOException {
         ConsumeApiFillDataBase consumeApiFillDataBase = new ConsumeApiFillDataBase();
