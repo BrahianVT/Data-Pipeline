@@ -22,6 +22,7 @@ public class ConsumeApiFillDataBase {
 
     ParseApiInformation parse = new ParseApiInformation();
     ConnectConsumeApi consumeApi = new ConnectConsumeApi();
+
     public void consumeApi() throws IOException {
             while(true) {
                 String url = URL_BASE_API +"&rows="+ROWS+"&start="+startIndex;
@@ -29,10 +30,8 @@ public class ConsumeApiFillDataBase {
                 String outputApi = br.readLine();
                 startIndex += ROWS;
                 if(!outputApi.contains("datasetid")) break;
-                parse.parseDataApi(outputApi);
+                Metrobus metrobusElement = parse.parseDataApi(outputApi);
             }
-
-        List<Metrobus> metrobusList = parse.getMetrobusList();
     }
 
     public static void main(String[] args) throws IOException {

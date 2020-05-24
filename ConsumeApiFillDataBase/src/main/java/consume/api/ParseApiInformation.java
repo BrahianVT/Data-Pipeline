@@ -25,10 +25,10 @@ public class ParseApiInformation {
 
     Matcher matcherRecordId, matcherVehicleId , matcherCounty;
     Matcher matcherDateUpdated, matcherPositionLongitude, matcherPositionLatitude;
-    List<Metrobus> metrobusList = new ArrayList<Metrobus>();
+
     ConnectConsumeApi consumeApiCounty = new ConnectConsumeApi();
 
-    public void parseDataApi(String result) throws IOException{
+    public Metrobus parseDataApi(String result) throws IOException{
         matcherRecordId = patternRecordId.matcher(result);
         matcherVehicleId = patternVehicleId.matcher(result);
         matcherDateUpdated = patternDateUpdated.matcher(result);
@@ -49,9 +49,10 @@ public class ParseApiInformation {
             BigDecimal latitude = new BigDecimal(positionLatitude);
             String alcaldia = consumeAPIGetCounty(longitude, latitude);
             Metrobus metrobus = new Metrobus(recordId, vehicleId, dateUpdated, longitude, latitude, alcaldia);
-            metrobusList.add(metrobus);
+            return metrobus;
 
         }
+        return null;
     }
 
     public String parseCounty(String county){
@@ -75,7 +76,4 @@ public class ParseApiInformation {
         return parseCounty(result);
     }
 
-    public List<Metrobus> getMetrobusList() {
-        return metrobusList;
-    }
 }

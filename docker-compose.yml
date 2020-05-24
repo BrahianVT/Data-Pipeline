@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  mysqlMetrobus:
+    image: mysql:5.7
+    container_name: mysqldb
+    ports:
+      - "3306:3306"
+    volumes:
+    - './Volumes-Docker/sql/init.sql:/sql/init.sql'
+    command: --init-file /sql/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: metrobus  
