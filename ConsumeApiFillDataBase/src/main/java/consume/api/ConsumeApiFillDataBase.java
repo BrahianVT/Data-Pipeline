@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Brahian VT
@@ -23,7 +25,7 @@ public class ConsumeApiFillDataBase {
 
     ParseApiInformation parse = new ParseApiInformation();
     ConnectConsumeApi consumeApi = new ConnectConsumeApi();
-    SqlConnection sqlConn = new SqlConnection();
+
     public void consumeApi() throws IOException {
             while(true) {
                 String url = URL_BASE_API +"&rows="+ROWS+"&start="+startIndex;
@@ -36,9 +38,20 @@ public class ConsumeApiFillDataBase {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        ConsumeApiFillDataBase consumeApiFillDataBase = new ConsumeApiFillDataBase();
-        consumeApiFillDataBase.consumeApi();
+    public static void main(String[] args) {
+
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                ConsumeApiFillDataBase consumeApiFillDataBase = new ConsumeApiFillDataBase();
+                try {
+                    consumeApiFillDataBase.consumeApi();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 0, 1 * 240 * 1000);
+
 
     }
 

@@ -1,0 +1,12 @@
+version: '3.6'
+services:
+  storeDb:
+    container_name: storeDb
+    image: api-store-bd:1.0
+    
+    volumes:
+      - ./volume/cronJob:/cronJob
+      - ./volume/log:/log
+    environment:
+      Lang: en_us.utf-8
+    

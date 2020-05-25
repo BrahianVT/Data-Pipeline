@@ -1,0 +1,2 @@
+*/4       *       *       *       *        java -Dfile.encoding=UTF8 -jar /jar/filldataBase.jar >> /var/log/cron.log 2>&1
+#
