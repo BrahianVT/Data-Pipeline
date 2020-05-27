@@ -8,12 +8,14 @@ import java.sql.*;
 import java.util.Properties;
 
 /**
+ * Clase que gestiona conexiones a la base de datos
  * @author BrahianVT
  * */
 public class SqlConnection {
     Properties config;
     ReadPropertyFile read = new ReadPropertyFile();
     Connection conn = null;
+    // Crea un conexion a la base de datoe
     public void openConnection(){
         Properties auxConfig = getSqlProperties();
 
@@ -30,6 +32,7 @@ public class SqlConnection {
         }
     }
 
+    // Metodo que cierra una conexion con base de datos
     public void disconnect(){
         System.out.println("Disconnect from database..");
         if(conn != null){
@@ -42,6 +45,7 @@ public class SqlConnection {
         }
     }
 
+    // checa si un registro ya esta guardado en la db
     public boolean checkRecordId(String recordId){
         try{
             Statement statement = conn.createStatement();
@@ -59,7 +63,7 @@ public class SqlConnection {
         }
     }
 
-
+    // inserta un registro en la db
     public void insertBusInfo(Metrobus bus){
         String queryInsert = "INSERT INTO metrobus_info(id_record, id_vehicle, date_updated, longitude , latitude" +
                 ", county) VALUES (";
@@ -74,17 +78,9 @@ public class SqlConnection {
         }
     }
 
+    // optiene propiedades para crear la conexion
     public Properties getSqlProperties(){
         return (config != null)?config:read.getProperties();
     }
 
-    public static void main(String[] args) {
-        // Sql conn
-        SqlConnection test = new SqlConnection();
-        test.openConnection();
-        test.checkRecordId("0c94473d65d2185d7efc65b89d57413eda8ebfcc");
-        //test.insertBusInfo();
-
-        test.disconnect();
-    }
 }

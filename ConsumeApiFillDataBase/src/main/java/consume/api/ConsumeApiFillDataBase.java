@@ -16,6 +16,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * Clase de entrada desde aqui se comsume el servicio de la pagina https://datos.cdmx.gob.mx
+ * y se configura para cada x tiempo consultar de nuevo el servicio
  * @author Brahian VT
  * */
 
@@ -37,7 +39,8 @@ public class ConsumeApiFillDataBase {
             }
     }
 
-
+    // por default la applicacion consultara el servicio cada 3600s osea una hora
+    // se puede indicar otro intervalo que puede ser definido como variable de entrada
     public static void main(String[] args) {
         int minuteAtSeconds = 3600;
         if(args.length == 1) minuteAtSeconds = Integer.parseInt(args[0]);

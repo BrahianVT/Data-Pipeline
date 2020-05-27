@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * Clase que realiza la conexion a los servicios mediante una url
  * @author Brahian VT
  * */
 public class ConnectConsumeApi {

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
+ * Clase que obtiene las propiedades  del archivo config.properties
  * @author BrahianVT
  * */
 public class ReadPropertyFile {

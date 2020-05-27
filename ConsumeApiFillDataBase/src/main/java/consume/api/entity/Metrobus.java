@@ -4,6 +4,7 @@ package consume.api.entity;
 import java.math.BigDecimal;
 
 /**
+ * Clase qie se usa para guardar la informacion relevante del servicio consumido
  * @author Brahian VT
  * */
 public class Metrobus {
