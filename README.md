@@ -22,6 +22,7 @@ Basicamente se almacena en esta tabla:
 ![Alt text](img/table.PNG?raw=true "Tabla MySql")
 
 **Tecnologias Utilizadas**
+* Java 8 y Maven
 * Intellij Idea, Windows 10 Home
 * Lombok Intellij Idea plugin
 * Docker y  Docker Compose(docker tool box) (https://docs.docker.com/toolbox/toolbox_install_windows/)  en mi caso Windows 10 home
@@ -70,9 +71,34 @@ java -jar "name".jar
 
 Los Rest END-POINT son estos: 
 
-Si es que no utiliza los contenedores de docker:
+Si es que no utiliza los contenedores de docker acceda a esta documentación en este link:
 
 *http://localhost:8080/api/metrobusInfo/{url}
 
 ### Swagger
 Si el proyecto levantó correctamente puede ver los endPoints aqui : http://localhost:8080/swagger-ui.html
+
+#### EndPoint
+/api/metrobusInfo/findAllMetroBus/{pageNo}/{pageSize}  
+Obtiene todos los registros de la tabla metrobus_info   
+Ejemplo http://localhost:8080/api/metrobusInfo/findAllMetroBus/1/20  obtiene primero 20 registros, de la pagina 1  
+
+
+​/api​/metrobusInfo​/findByLonAndLat​/{longitude}​/{latitude}  
+Obtiene todos los registros en base a la longitud y latitud  
+Ejemplo http://localhost:8080/api/metrobusInfo/findByLonAndLat/-99.18779754638672/19.31749916076660  
+
+/api/metrobusInfo/findByCounty/{county}  
+Obtiene todos los registros de una delegación  
+Ejemplo http://localhost:8080/api/metrobusInfo/findByCounty/Iztapalapa
+
+
+​/api​/metrobusInfo​/findByIdVehicle​/{idVehicle}
+Obtiene registros en base al Id de un vehiculo
+http://localhost:8080/api/metrobusInfo/findByIdVehicle/1078
+
+/api/metrobusInfo/findAllCounty
+Obtiene todas las delegaciones que estan en DB  
+http://localhost:8080/api/metrobusInfo/findAllCounty  
+
+Recordatorio si no uso docker puede consultar estos servicio desde aqui de otra manera acceda en base mediante la dirección de docker  
