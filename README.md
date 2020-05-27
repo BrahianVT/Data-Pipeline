@@ -69,11 +69,8 @@ Solo entre ala carpeta **Target** y ejecute los jar mediante este comando:
 java -jar "name".jar
 ```
 
-Los Rest END-POINT son estos: 
+Los Rest END-POINT son estos vea la documentacion en swagger: 
 
-Si es que no utiliza los contenedores de docker acceda a esta documentación en este link:
-
-*http://localhost:8080/api/metrobusInfo/{url}
 
 ### Swagger
 Si el proyecto levantó correctamente puede ver los endPoints aqui : http://localhost:8080/swagger-ui.html
