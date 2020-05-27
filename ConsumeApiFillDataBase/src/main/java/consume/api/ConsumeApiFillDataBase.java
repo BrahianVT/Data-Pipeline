@@ -3,6 +3,7 @@ package consume.api;
 
 import consume.api.entity.Metrobus;
 import consume.api.sqlConn.SqlConnection;
+import consume.api.util.ReadPropertyFile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +23,6 @@ public class ConsumeApiFillDataBase {
     private final static String URL_BASE_API  = "https://datos.cdmx.gob.mx/api/records/1.0/search/?dataset=prueba_fetchdata_metrobus&q=";
     private static Integer ROWS = 50;
     private  Integer startIndex = 0;
-
     ParseApiInformation parse = new ParseApiInformation();
     ConnectConsumeApi consumeApi = new ConnectConsumeApi();
 
@@ -39,7 +39,10 @@ public class ConsumeApiFillDataBase {
 
 
     public static void main(String[] args) {
+        int minuteAtSeconds = 3600;
+        if(args.length == 1) minuteAtSeconds = Integer.parseInt(args[0]);
 
+        System.out.println("Every " + minuteAtSeconds + " seconds");
         Timer t = new Timer();
         t.scheduleAtFixedRate(new TimerTask() {
             public void run() {
@@ -50,7 +53,7 @@ public class ConsumeApiFillDataBase {
                     e.printStackTrace();
                 }
             }
-        }, 0, 1 * 240 * 1000);
+        }, 0, 1 * minuteAtSeconds * 1000);
 
 
     }

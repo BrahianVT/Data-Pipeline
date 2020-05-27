@@ -3,10 +3,10 @@ services:
   storeDb:
     container_name: storeDb
     image: api-store-bd:1.0
-    
     volumes:
-      - ./volume/cronJob:/cronJob
-      - ./volume/log:/log
+      - /volume/shCript:/shScript
     environment:
       Lang: en_us.utf-8
+      seconds: 240
+    command: sh -c " java -jar -Dfile.encoding=UTF8 jar/filldataBase.jar $${seconds}"
     
