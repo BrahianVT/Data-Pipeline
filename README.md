@@ -4,9 +4,10 @@ Esta es la prueba para vacante de Back-End
 ## Diagrama de Solución
 ![Alt text](img/diagrama.jpeg?raw=true "Diagrama de Solución Propuesto")
 
-## Aqui se realizó como solución de 2 Proyectos:
+## Aqui se crearon como solución, 2 Proyectos:
 * ConsumeApiFillDataBase
 * RestApi
+
 
 El Primero persistirá en base de datos de MySql registros de la pagina de datos abiertos de la CDMX:
 [Pagina](https://datos.cdmx.gob.mx/explore/dataset/prueba_fetchdata_metrobus/api/) 
