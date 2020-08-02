@@ -9,7 +9,7 @@ Data pipelines consist of three key elements:
 * A Destination
 
 Complex data pipelines include another tasks which involke a lot of systems, technologies and platforms such as Apache Hive and products  
-of Microsoft or Amazon, but for our example just I will cover the three steps above, a source( a data like on the net), the processing steps to  
+of Microsoft or Amazon, but for our example just I will cover the three steps above, a source(data from a source in internet), the processing steps to  
 clean the data and get or create new data from it data and the destination a database.  
 
 ## Data PipeLine Solution
@@ -24,8 +24,8 @@ The first service  called **ConsumeApiFillDataBase** will persistence to a MySql
 [Source](https://datos.cdmx.gob.mx/explore/dataset/prueba_fetchdata_metrobus/api/) 
 In this source the data is updated each hour, so this data service will fetch new data every hour.  
 
-Here we need to do some process steps before save to the data base what we need to filter the revelant information for me (check the table below)
-and also I need to find a relevant data not include in the result this fild is the count, in some register the county is present, but not in all.  
+Here we need to do some process steps before save to the data base,  we need filter the revelant information for me (check the table below)
+and also I need to find a relevant data that are not present in the result , this field is called county, in some register the county is present, but not in all.    
 
 In order to find the county I need to call this API from OpenStreetMap, also Here we can use google maps but after a amount of calls google will charge you some money :(  
 
@@ -34,7 +34,7 @@ This is the site https://nominatim.openstreetmap.org and the documentation is he
 Here I used the service called  [Reverse ](https://nominatim.org/release-docs/develop/api/Reverse/)   
 
 ## Data base
-Basically This is the dable:  
+Basically This is the table:  
 
 ![Alt text](img/table.PNG?raw=true "MySql Table")
 
