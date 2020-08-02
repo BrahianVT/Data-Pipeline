@@ -1,37 +1,53 @@
 # Data Pipeline Example
-Esta es la prueba para vacante de Back-End
+First of all What is a Data Pipeline?  
+A Data pipeline  is a series of data processing steps. Then there are a series of steps in which each step  
+delivers an output that is the input to the next step.  
 
-## Diagrama de Solución
-![Alt text](img/diagrama.jpeg?raw=true "Diagrama de Solución Propuesto")
+Data pipelines consist of three key elements:
+* A Source
+* Processing Steps
+* A Destination
 
-## Aqui se crearon como solución, 2 Proyectos:
+Complex data pipelines include another tasks which involke a lot of systems, technologies and platforms such as Apache Hive and products  
+of Microsoft or Amazon, but for our example just I will cover the three steps above, a source( a data like on the net), the processing steps to  
+clean the data and get or create new data from it data and the destination a database.  
+
+## Data PipeLine Solution
+![Alt text](img/diagrama.jpeg?raw=true "Data Pipeline Solution")
+
+## I created two services in the project:
 * ConsumeApiFillDataBase
 * RestApi
 
 
-El Primero persistirá en base de datos de MySql registros de la pagina de datos abiertos de la CDMX:
-[Pagina](https://datos.cdmx.gob.mx/explore/dataset/prueba_fetchdata_metrobus/api/) 
-Esta se almazenará en un contenedor de Docker se configuró para que cada hora cheque en la pagina por mas datos porque 
-cada hora se actualiza en la pagina.
+The first service  called **ConsumeApiFillDataBase** will persistence to a MySql database from this page:  
+[Source](https://datos.cdmx.gob.mx/explore/dataset/prueba_fetchdata_metrobus/api/) 
+In this source the data is updated each hour, so this data service will fetch new data every hour.  
 
-Para encontrar la delegación se consulta este servicio del API de OpenStreetMap:
-https://nominatim.openstreetmap.org
+Here we need to do some process steps before save to the data base what we need to filter the revelant information for me (check the table below)
+and also I need to find a relevant data not include in the result this fild is the count, in some register the county is present, but not in all.  
 
-## Base de datos
-Basicamente se almacena en esta tabla:  
+In order to find the county I need to call this API from OpenStreetMap, also Here we can use google maps but after a amount of calls google will charge you some money :(  
 
-![Alt text](img/table.PNG?raw=true "Tabla MySql")
+To call this service we just need the latitude and longitude.  
+This is the site https://nominatim.openstreetmap.org and the documentation is here [Api Documentation](https://nominatim.org/release-docs/develop/api/Overview/)  
+Here I used the service called  [Reverse ](https://nominatim.org/release-docs/develop/api/Reverse/)   
 
-**Tecnologias Utilizadas**
-* Java 8 y Maven
+## Data base
+Basically This is the dable:  
+
+![Alt text](img/table.PNG?raw=true "MySql Table")
+
+**Technologies**
+* Java 8 and Maven
 * Intellij Idea, Windows 10 Home
 * Lombok Intellij Idea plugin
-* Docker y  Docker Compose(docker tool box) (https://docs.docker.com/toolbox/toolbox_install_windows/)  en mi caso Windows 10 home
-* [Spring Initialzr](https://start.spring.io/)  Se uso para el proyecto RestApi
+* Docker and Docker Compose(docker tool box) (https://docs.docker.com/toolbox/toolbox_install_windows/) for Windows 10 home
+* [Spring Initialzr](https://start.spring.io/)  Used in the project calld RestApi.
 * MySql and H2 as databases
 * Java 8, Spring Boot 2, Maven, Spring Data, Spring Data, Lombok, JUnit, Mockito, Hamcrest, Docker Compose , Slf4j y Swagger
 
-### Configuración e Instalación
+### Settings
 
 Primero descarga el proyecto y ve a la carpeta padre desde CMD, antes de eso aseguresé de tener docker-compose instalado.
 Ejecute el comando para levantar el servicio de MySQL:
